@@ -27,4 +27,6 @@ public:
         }
         return dp[0][l-1];
     }
+    //OR
+    // l-LCS(s)
 };
