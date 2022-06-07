@@ -1,13 +1,13 @@
 class Solution {
 public:
-    int fun(int i,int txn,vector<int>& prices){
-        if(i==prices.size()||txn==4) return 0;
-        if(txn%2==0){
-            return max(-1*prices[i]+fun(i+1,txn+1,prices),fun(i+1,txn,prices));
-        }else{
-            return max(prices[i]+fun(i+1,txn+1,prices),fun(i+1,txn,prices));
-        }
-    }
+    // int fun(int i,int txn,vector<int>& prices){
+    //     if(i==prices.size()||txn==4) return 0;
+    //     if(txn%2==0){
+    //         return max(-1*prices[i]+fun(i+1,txn+1,prices),fun(i+1,txn,prices));
+    //     }else{
+    //         return max(prices[i]+fun(i+1,txn+1,prices),fun(i+1,txn,prices));
+    //     }
+    // }
     int maxProfit(vector<int>& prices) {
         // return fun(0,0,prices);
         int n=prices.size();
