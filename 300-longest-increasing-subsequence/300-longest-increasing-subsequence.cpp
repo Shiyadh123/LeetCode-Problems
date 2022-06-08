@@ -11,16 +11,30 @@ public:
     int lengthOfLIS(vector<int>& nums) {
         // return fun(0,-1,nums);
         int n=nums.size();
-        vector<vector<int>> dp(n+1,vector<int> (n+1,0));
-          for(int i=n-1;i>=0;i--){
-            for(int j=i;j>=0;j--){
-                if(j-1==-1||nums[i]>nums[j-1]){
-                    dp[i][j]=max(1+dp[i+1][i+1],dp[i+1][j]);
-                }else{
-                    dp[i][j]=dp[i+1][j];
+        // dp
+        // vector<vector<int>> dp(n+1,vector<int> (n+1,0));
+        //   for(int i=n-1;i>=0;i--){
+        //     for(int j=i;j>=0;j--){
+        //         if(j-1==-1||nums[i]>nums[j-1]){
+        //             dp[i][j]=max(1+dp[i+1][i+1],dp[i+1][j]);
+        //         }else{
+        //             dp[i][j]=dp[i+1][j];
+        //         }
+        //     }
+        // }
+        // return dp[0][0];
+
+        // tabulation
+        vector<int> dp(n,1);
+        for(int i=0;i<n;i++){
+            for(int prev=0;prev<i;prev++){
+                if(nums[i]>nums[prev]){
+                    dp[i]=max(dp[i],1+dp[prev]);
                 }
             }
         }
-        return dp[0][0];
+        int maxiLen=1;
+        for(auto i:dp) maxiLen=max(maxiLen,i);
+        return maxiLen;
     }
 };
