@@ -35,6 +35,20 @@ public:
         }
         int maxiLen=1;
         for(auto i:dp) maxiLen=max(maxiLen,i);
+        int len=maxiLen;
+        
+        //printing
+        int ind=n-1;
+        vector<int> ans;
+        while(ind>=0){
+            if(dp[ind]==len){
+                ans.push_back(nums[ind]);
+                len--;
+            }
+            ind--;
+        }
+        // for(auto p:ans) cout<<p<<" ";
+        
         return maxiLen;
     }
 };
