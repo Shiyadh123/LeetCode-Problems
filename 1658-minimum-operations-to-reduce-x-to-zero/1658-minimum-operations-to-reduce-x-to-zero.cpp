@@ -15,8 +15,8 @@ public:
             currSum+=nums[i];
             if(mp.find(currSum-k)!=mp.end()){
                 maxLen=max(maxLen,i-mp[currSum-k]);
-            } 
-            mp[currSum]=i;
+            }
+            if(mp.find(currSum)==mp.end()) mp[currSum]=i;
         }
         return (maxLen==0&&k!=0)?-1:(n-maxLen);
     }
