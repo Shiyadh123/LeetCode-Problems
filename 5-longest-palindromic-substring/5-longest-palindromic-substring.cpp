@@ -8,14 +8,7 @@ public:
         for(int i=0;i<l;i++){
             for(int j=0;j<(l-i);j++){
                 if(j==i+j) dp[j][i+j]=1;
-                else{
-                    if(s[j]!=s[i+j]) dp[j][i+j]=0;
-                    else{
-                        if(j+1==i+j) dp[j][i+j]=1;
-                        else dp[j][i+j]=dp[j+1][i+j-1];
-                    }
-                }
-                if(dp[j][i+j]) {st=j;en=i+j;}
+                else dp[j][i+j]=s[j]==s[i+j]&&(j+1==i+j||dp[j+1][i+j-1]);                                   if(dp[j][i+j]) {st=j;en=i+j;}
             }
         }
         // for(auto i:dp){
