@@ -5,11 +5,12 @@ public:
         if(target==0) {ans.insert(curr); return;}
         if(i>=candidates.size()||target<0) return ;
         for(int j=i;j<candidates.size();j++){
-             if(j==i||candidates[j]!=candidates[j-1]){
+            if(j>i&&candidates[j]==candidates[j-1]) continue;
+            if(candidates[j]>target) break;
                 curr.push_back(candidates[j]);
                 fun(j+1,curr,target-candidates[j],ans,candidates);
                 curr.pop_back();
-            }
+            
         }
     }
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
