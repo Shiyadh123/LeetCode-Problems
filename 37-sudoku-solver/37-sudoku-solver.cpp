@@ -7,10 +7,8 @@ bool isPossible(vector<vector<char>> board,int i,int j,char c){
     }
     int colStart=(j/3)*3;
     int rowStart=(i/3)*3;
-    for(int p=0;p<3;p++){
-            for(int q=0;q<3;q++){
-                if(board[rowStart+p][colStart+q]==c) return false;
-            }
+    for(int p=0;p<9;p++){
+                if(board[rowStart+(p/3)][colStart+(p%3)]==c) return false;
     }
     return true;
 }
