@@ -1,23 +1,18 @@
 class Solution {
 public:
-    void fun(vector<int> perm,vector<vector<int>> &ans,unordered_map<int,int> isPicked,vector<int> nums){
-        if(perm.size()==nums.size()){
-            ans.push_back(perm); return;
+    void fun(int i,vector<vector<int>> &ans,vector<int> nums){
+        if(i==nums.size()){
+            ans.push_back(nums); return;
         }
-        for(auto i:nums){
-            if(isPicked[i]) continue;
-            perm.push_back(i);
-            isPicked[i]++;
-            fun(perm,ans,isPicked,nums);
-            perm.pop_back();
-            isPicked[i]--;
+        for(int j=i;j<nums.size();j++){
+            swap(nums[i],nums[j]);
+            fun(i+1,ans,nums);
+            swap(nums[i],nums[j]);
         }
     }
     vector<vector<int>> permute(vector<int>& nums) {
-        unordered_map<int,int> isPicked;
         vector<vector<int>> ans;
-        vector<int> perm;
-        fun(perm,ans,isPicked,nums);
+        fun(0,ans,nums);
         return ans;
     }
 };
