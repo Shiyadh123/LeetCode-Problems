@@ -14,24 +14,28 @@ public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
         vector<vector<int>> zigZag;
         if(root==NULL) return zigZag;
-        queue<TreeNode*> q;
-        q.push(root);
-        bool LtoR=true;
-        while(!q.empty()){
-            vector<TreeNode*> level;
-            while(!q.empty()){
-                level.push_back(q.front()); q.pop();
+        stack<TreeNode*> st1,st2;
+        st1.push(root);
+        vector<int> row;
+        while(!st1.empty()||!st2.empty()){
+            
+            while(!st1.empty()){
+                TreeNode* tmp=st1.top(); st1.pop();
+                if(tmp->left) st2.push(tmp->left);
+                if(tmp->right) st2.push(tmp->right);
+                row.push_back(tmp->val);
             }
-            for(auto i:level) {
-                if(i->left) q.push(i->left);
-                if(i->right) q.push(i->right);
+            zigZag.push_back(row);
+            row.clear();
+            while(!st2.empty()){
+                TreeNode* tmp=st2.top(); st2.pop();
+                if(tmp->right) st1.push(tmp->right);
+                if(tmp->left) st1.push(tmp->left);
+                row.push_back(tmp->val);
             }
-            if(!LtoR) reverse(level.begin(),level.end());
-            LtoR=!LtoR;
-            vector<int> vals;
-            for(auto i:level) vals.push_back(i->val);
-            zigZag.push_back(vals);
-        }
+            if(!row.empty()) zigZag.push_back(row);
+            row.clear();
+        }         
         return zigZag;
     }
 };
