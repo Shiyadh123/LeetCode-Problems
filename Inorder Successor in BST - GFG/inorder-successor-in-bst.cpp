@@ -110,19 +110,13 @@ struct Node {
 class Solution{
   public:
     // returns the inorder successor of the Node x in BST (rooted at 'root')
-    Node* fun(Node *root, Node *x,Node* par){
-       if(root==x) {
-          if(root->right){
-            Node * temp=root->right;
-            while(temp->left)  temp=temp->left;
-            return temp;;
-          }else{
-            return par;
-          }
+    Node* fun(Node *root, Node *x,Node* succ){
+       if(!root) return succ;
+       if(root->data>x->data) {
+          return fun(root->left,x,root);
+        }else{
+          return fun(root->right,x,succ);
         }
-        if(root->data>x->data) return fun(root->left,x,root);
-        if(root->data<x->data) return fun(root->right,x,par);
-
     }
     Node * inOrderSuccessor(Node *root, Node *x)
     {
@@ -131,6 +125,7 @@ class Solution{
        
     }
 };
+
 
 // { Driver Code Starts.
 
