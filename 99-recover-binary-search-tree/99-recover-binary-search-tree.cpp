@@ -10,33 +10,37 @@
  * };
  */
 class Solution {
-public:
-     TreeNode* first1=NULL,*first2=NULL,*second=NULL;
-     void doInorder(TreeNode* root ){
-        stack<TreeNode*> st;
-        TreeNode* prev=NULL;
-        while(root||(!st.empty())){
-            while(root){
-                st.push(root); root=root->left;
-            }
-            root=st.top(); st.pop();
-            if(prev&&(prev->val>root->val)){
-                
-                if(first1){
-                    second=root;
-                }else{
-                    first1=prev; first2=root;
-                }
-            }
-            prev=root;
-            root=root->right;
-        }
-        // cout<<first1->val;
-        return;
-    }
+    public:
     void recoverTree(TreeNode* root) {
-        first1=NULL;first2=NULL;second=NULL;
-        doInorder(root);
+        TreeNode* first1=NULL,*first2=NULL,*second=NULL;
+        TreeNode* prev=NULL;
+        while(root){
+            if(root->left){ 
+                TreeNode* temp=root->left;
+                while(temp->right&&temp->right!=root) temp=temp->right;
+                if(temp->right ==root) {
+                    temp->right=NULL;
+                    if(prev&&(prev->val>root->val)){
+                        // cout<<prev->val<<" ";
+                        if(!first1) {first1=prev; first2=root;}
+                        else second =root;
+                    }
+                    prev=root;
+                    root=root->right;
+                }
+                else {temp->right=root; root=root->left;}
+
+            }else{
+                 if(prev&&(prev->val>root->val)){
+                        // cout<<prev->val<<" ";
+                        if(!first1) {first1=prev; first2=root;}
+                        else second =root;
+                    }
+                prev=root;
+                root=root->right;
+            }
+        }
+        // cout<<first1->val<<" "<<first2->val<<" ";
          if(second){
              swap(first1->val,second->val);
          }else{
