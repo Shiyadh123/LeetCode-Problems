@@ -21,10 +21,10 @@ public:
          for(int i=1;i<=m;i++){
             for(int j=1;j<=n;j++){
                 long long maxi=pricesMap[i][j];
-                for(int k=1;k<i;k++){
+                for(int k=1;k<=i/2;k++){
                     maxi=max(maxi,dp[k][j]+dp[i-k][j]);
                 }
-                for(int k=1;k<j;k++){
+                for(int k=1;k<=j/2;k++){
                     maxi=max(maxi,dp[i][k]+dp[i][j-k]);
                 }
                 dp[i][j]=max(dp[i][j],maxi);
