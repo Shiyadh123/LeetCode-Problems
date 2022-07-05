@@ -1,21 +1,15 @@
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-        int n=nums.size();
-        if(n==1) return nums[0];
-        long long maxprod=1;
-        long long minprod=1;
-        int maxi=0;
-        for(int i=0;i<n;i++){
-            
-            long long mp;
-            mp= max(maxprod*nums[i],max((long long)nums[i],minprod*nums[i]));
-            minprod= min(maxprod*nums[i],min((long long)nums[i],minprod*nums[i]));
-            maxprod=mp;
-            
-            maxi=max((long long)maxi,maxprod);
-           
+          int n=nums.size();
+          if(n==1) return nums[0];
+          vector<int> maxi(n);  
+          vector<int> mini(n);  
+          maxi[0]=nums[0]; mini[0]=nums[0];
+        for(int i=1;i<n;i++){
+            maxi[i]=std::max({nums[i],nums[i]*maxi[i-1],nums[i]*mini[i-1]});
+            mini[i]=std::min({nums[i],nums[i]*maxi[i-1],nums[i]*mini[i-1]});
         }
-        return maxi;
+        return *max_element(maxi.begin(),maxi.end());
     }
 };
