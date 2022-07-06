@@ -103,25 +103,25 @@ class Solution{
     public:
     /*You are required to complete this method */
     // Return the size of the largest sub-tree which is also a BST
-    pair<int,pair<int,int>> fun(Node * root,int& maxSize){
+    pair<int,pair<int,int>> fun(Node * root){
         // cout<<maxSize<<" ";
         if(!root) return {0,{INT_MIN,INT_MAX}};
-         pair<int,pair<int,int>> lN=fun(root->left,maxSize);
-         pair<int,pair<int,int>> rN=fun(root->right,maxSize);
+         pair<int,pair<int,int>> lN=fun(root->left);
+         pair<int,pair<int,int>> rN=fun(root->right);
         if(root->data>lN.second.first&&root->data<rN.second.second){
             int newSize=1+lN.first+rN.first;
-            maxSize=max(maxSize,newSize);
+            // maxSize=max(maxSize,newSize);
             return {newSize,{max(root->data,rN.second.first),min(root->data,lN.second.second)}};
         }else{
-            return {0,{INT_MAX,INT_MIN}};
+            return {max(lN.first,rN.first),{INT_MAX,INT_MIN}};
         }
     }
     int largestBst(Node *root)
     {
     	//Your code here
         int maxi=0;
-    	pair<int,pair<int,int>> temp=fun(root,maxi);
-    	return maxi;
+    return( fun(root).first);
+    // 	return maxi;
     }
 };
 
