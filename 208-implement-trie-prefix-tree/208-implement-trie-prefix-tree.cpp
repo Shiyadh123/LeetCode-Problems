@@ -1,7 +1,28 @@
 struct node{
     bool end=false;
-    node* next[26]={NULL};
+    node* links[26]={NULL};
+    
+    bool containsKey(char ch){
+        return (links[ch-'a']!=NULL);
+    }
+
+    void putNode(char ch,node* newNode){
+        links[ch-'a']=newNode;
+    }
+
+    node* getNode(char ch){
+        return links[ch-'a'];
+    }
+
+    void setEnd(){
+        end=true;
+    }
+
+    bool isEnd(){
+        return end;
+    }
 };
+
 class Trie {
 private:
     node* root;
@@ -14,17 +35,12 @@ public:
         int l=word.length();
         node* temp=root;
         for(int i=0;i<l;i++){
-            if(temp->next[word[i]-'a']){
-                temp=temp->next[word[i]-'a'];
-            }else{
-                node* newNode=new node();
-                temp->next[word[i]-'a']=newNode;
-                temp=temp->next[word[i]-'a'];
+            if(!temp->containsKey(word[i])){
+                temp->putNode(word[i],new node());
             }
-            if(i==l-1){
-                temp->end=true;
-            }
+            temp=temp->getNode(word[i]);
         }
+        temp->setEnd();
         return;
     }
     
@@ -32,21 +48,18 @@ public:
         int l=word.length();
         node* temp=root;
         for(int i=0;i<l;i++){
-            if(temp->next[word[i]-'a']==NULL) return false;
-            temp=temp->next[word[i]-'a'];
-            if(i==l-1){
-                return temp->end==true;
-            }
+             if(!temp->containsKey(word[i])) return false;
+             temp=temp->getNode(word[i]);
         }
-        return true;
+        return temp->isEnd();
     }
     
     bool startsWith(string prefix) {
-        int l=prefix.length();
+       int l=prefix.length();
         node* temp=root;
         for(int i=0;i<l;i++){
-            if(temp->next[prefix[i]-'a']==NULL) return false;
-            temp=temp->next[prefix[i]-'a'];
+             if(!temp->containsKey(prefix[i])) return false;
+             temp=temp->getNode(prefix[i]);
         }
         return true;
     }
