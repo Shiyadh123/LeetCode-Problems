@@ -10,22 +10,31 @@
  */
 class Solution {
 public:
-    ListNode* reverseBetween(ListNode* head, int left, int right) {
-        ListNode *dummy = new ListNode(0); // created dummy node
-        dummy->next = head;
-        ListNode *prev = dummy; // intialising prev pointer on dummy node
-        
-        for(int i = 0; i < left - 1; i++)
-            prev = prev->next; // adjusting the prev pointer on it's actual index
-        
-        ListNode *curr = prev->next; // curr pointer will be just after prev
-        // reversing
-        for(int i = 0; i < right - left; i++){
-            ListNode *forw = curr->next; // forw pointer will be after curr
-            curr->next = forw->next;
-            forw->next = prev->next;
-            prev->next = forw;
+    ListNode* reverse(ListNode* start,ListNode* end){
+        ListNode* tail=end->next;
+        ListNode* prev=tail,* curr=start;
+        while(curr!=tail){
+            ListNode* temp=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=temp;
         }
+        return prev;
+    }
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        ListNode* dummy =new ListNode();
+        dummy->next=head;
+        ListNode* temp=dummy;
+        ListNode* leftNode=NULL,* rightNode=NULL;
+        int i=0;
+        while(temp){
+            if(i==left-1) leftNode=temp;
+            if(i==right) rightNode=temp;
+            temp=temp->next;
+            i++;
+        }
+        // if(!leftNode||!rightNode) return  dummy->next;
+        leftNode->next=reverse(leftNode->next,rightNode);
         return dummy->next;
     }
 };
