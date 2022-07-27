@@ -1,24 +1,28 @@
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-        Node* dummyHead=new Node(-1,NULL,NULL);
-        Node* temp=dummyHead;
+        if(!head) return head;
         Node* curr=head;
-        unordered_map<Node*,Node*> address;
         while(curr){
             Node* newNode=new Node(curr->val,curr->next,NULL);
-            temp->next=newNode;
-            temp=temp->next; 
-            address[curr]=temp;
-            curr=curr->next;
+            curr->next=newNode;
+            curr=curr->next->next;
         }
         curr=head;
-        temp=dummyHead->next;
         while(curr){
-            if(!curr->random) temp->random=NULL;
-            else temp->random=address[curr->random];
-            temp=temp->next; curr=curr->next;
+            if(!curr->random) curr->next->random=NULL;
+            else curr->next->random=curr->random->next;
+            curr=curr->next->next;
         }
-        return dummyHead->next;
+        Node* newHead=head->next;
+        Node* temp=newHead;
+        curr=head;
+        while(curr){
+            curr->next=curr->next->next;
+            curr=curr->next;
+            temp->next=temp->next?temp->next->next:NULL;
+            temp=temp->next;
+        }
+        return newHead;
     }
 };
