@@ -16,7 +16,7 @@ public:
         while(curr){
             if(curr->left){
                 TreeNode* temp=curr->left;
-                while(temp->right!=NULL) temp=temp->right;
+                while(temp->right) temp=temp->right;
                 temp->right=curr->right;
                 curr->right=curr->left;
                 curr->left=NULL;
